@@ -1,0 +1,523 @@
+<title>Haarmonie by Nor</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500&display=swap">
+<style>
+/* Layout: ein ruhiger Salon-Flyer – Logo-Kreis als Anker, Preisliste wie eine Salonkarte mit Punktlinien, Buchung als 3-Schritt-Karte */
+:root {
+  --bg: #fbf8ef;
+  --cream: #f6efd9;
+  --ink: #1d1c19;
+  --muted: #6b665c;
+  --line: #ddd4bd;
+  --brass: #8a6a3c;
+  --brass-soft: #efe4cb;
+  --surface: #ffffff;
+  --taken: #ebe5d6;
+  --ok: #2f6b4f;
+  --font-display: "Cormorant Garamond", "Cormorant", Garamond, "Times New Roman", serif;
+  --font-body: "Jost", "Futura", "Century Gothic", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111318; --cream: #1b1d23; --ink: #f1ead6; --muted: #a8a191; --line: #2e3038;
+    --brass: #cfae78; --brass-soft: #2a261d; --surface: #171920; --taken: #22242b; --ok: #7cc39e;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #111318; --cream: #1b1d23; --ink: #f1ead6; --muted: #a8a191; --line: #2e3038;
+  --brass: #cfae78; --brass-soft: #2a261d; --surface: #171920; --taken: #22242b; --ok: #7cc39e;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; animation: none !important; } }
+body {
+  background: var(--bg); color: var(--ink);
+  font-family: var(--font-body); font-weight: 300; font-size: 16px; line-height: 1.6;
+}
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+.wrap {
+  max-width: 1080px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+h1, h2, h3 { font-family: var(--font-display); font-weight: 500; line-height: 1.1; text-wrap: balance; margin: 0; }
+h2 { font-size: clamp(2rem, 4.5vw, 2.8rem); }
+p { margin: 0; }
+a { color: inherit; }
+.eyebrow { font-size: .75rem; letter-spacing: .28em; text-transform: uppercase; color: var(--brass); font-weight: 500; }
+:focus-visible { outline: 2px solid var(--brass); outline-offset: 3px; }
+
+/* Demo-Hinweis */
+.demo-bar { background: var(--ink); color: var(--bg); font-size: .8rem; text-align: center; padding-block: 6px; letter-spacing: .04em; }
+
+/* Kopfzeile */
+header.top {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5;
+  background: color-mix(in srgb, var(--bg) 92%, transparent);
+  backdrop-filter: blur(8px); border-bottom: 1px solid var(--line);
+}
+header.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 12px; }
+.brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.brand img { width: 40px; height: 40px; border-radius: 50%; display: block; }
+.brand span { font-family: var(--font-display); font-size: 1.35rem; font-weight: 600; letter-spacing: .06em; }
+nav.links { display: flex; gap: 22px; align-items: center; font-size: .9rem; }
+nav.links a { text-decoration: none; color: var(--muted); }
+nav.links a:hover { color: var(--ink); }
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  font: 500 .9rem/1 var(--font-body); letter-spacing: .06em;
+  padding: 14px 22px; border-radius: 999px; border: 1px solid var(--ink);
+  background: var(--ink); color: var(--bg); text-decoration: none; cursor: pointer;
+  transition: background .2s, color .2s;
+}
+.btn:hover { background: var(--brass); border-color: var(--brass); color: var(--bg); }
+.btn.ghost { background: transparent; color: var(--ink); }
+.btn.ghost:hover { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.btn.small { padding: 10px 16px; font-size: .8rem; }
+.btn[disabled] { opacity: .35; cursor: not-allowed; pointer-events: none; }
+@media (max-width: 760px) { nav.links a:not(.btn) { display: none; } }
+
+/* Hero */
+.hero .wrap { display: grid; grid-template-columns: 1.1fr .9fr; gap: 48px; align-items: center; padding-block: 64px 72px; }
+.hero h1 { font-size: clamp(2.6rem, 6.5vw, 4.6rem); font-weight: 400; margin-block: 14px 20px; }
+.hero h1 em { font-style: italic; color: var(--brass); }
+.hero p.lead { font-size: 1.1rem; color: var(--muted); max-width: 46ch; }
+.hero .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+.hero .facts { display: flex; flex-wrap: wrap; gap: 28px; margin-top: 36px; font-size: .85rem; color: var(--muted); }
+.hero .facts strong { display: block; font-family: var(--font-display); font-size: 1.6rem; font-weight: 500; color: var(--ink); line-height: 1.1; }
+.logo-disc { position: relative; justify-self: center; width: min(400px, 100%); aspect-ratio: 1; max-width: 100%; }
+.logo-disc img { width: 100%; height: 100%; border-radius: 50%; display: block; box-shadow: 0 30px 60px -30px rgba(40,30,10,.45); }
+.logo-disc::after { content: ""; position: absolute; inset: -14px; border-radius: 50%; border: 1px solid var(--line); pointer-events: none; }
+@media (max-width: 820px) {
+  .hero .wrap { grid-template-columns: 1fr; padding-block: 40px 56px; gap: 36px; }
+  .logo-disc { width: min(280px, 80%); order: -1; }
+}
+
+section { padding-block: 80px; }
+section.alt { background: var(--cream); border-block: 1px solid var(--line); }
+.sec-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 16px; margin-bottom: 40px; }
+.sec-head p { color: var(--muted); max-width: 52ch; }
+
+/* Preisliste */
+.menu { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px 48px; }
+@media (max-width: 900px) { .menu { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 600px) { .menu { grid-template-columns: 1fr; } }
+.menu h3 { font-size: 1.6rem; padding-bottom: 10px; border-bottom: 1px solid var(--ink); margin-bottom: 8px; }
+.menu ul { list-style: none; margin: 0; padding: 0; }
+.menu li { padding-block: 12px; border-bottom: 1px dotted var(--line); }
+.menu .row { display: flex; align-items: baseline; gap: 8px; }
+.menu .name { font-weight: 400; }
+.menu .dots { flex: 1; border-bottom: 1px dotted var(--muted); transform: translateY(-4px); opacity: .5; min-width: 12px; }
+.menu .price { font-family: var(--font-display); font-size: 1.25rem; font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.menu .meta { font-size: .8rem; color: var(--muted); display: flex; justify-content: space-between; gap: 8px; margin-top: 2px; }
+.menu .meta button { background: none; border: 0; padding: 0; color: var(--brass); font: 500 .78rem var(--font-body); letter-spacing: .06em; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+.note { font-size: .8rem; color: var(--muted); margin-top: 28px; }
+
+/* Buchung */
+.booking { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 32px; align-items: start; }
+@media (max-width: 900px) { .booking { grid-template-columns: 1fr; } }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 28px; min-width: 0; }
+@media (max-width: 500px) { .panel { padding: 20px 16px; } }
+.step + .step { margin-top: 32px; padding-top: 28px; border-top: 1px solid var(--line); }
+.step-title { display: flex; align-items: baseline; gap: 12px; margin-bottom: 16px; }
+.step-title .n { font-family: var(--font-display); font-size: 1.6rem; color: var(--brass); line-height: 1; }
+.step-title h3 { font-size: 1.45rem; }
+.step-title .hint { margin-left: auto; font-size: .8rem; color: var(--muted); }
+select, input, textarea {
+  width: 100%; font: 400 1rem var(--font-body); color: var(--ink);
+  background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px;
+}
+select:focus, input:focus, textarea:focus { outline: 2px solid var(--brass); outline-offset: 0; border-color: transparent; }
+label { display: block; font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; font-weight: 500; }
+.fields { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.fields .full { grid-column: 1 / -1; }
+@media (max-width: 560px) { .fields { grid-template-columns: 1fr; } }
+
+.days { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px; scrollbar-width: thin; }
+.day {
+  flex: 0 0 auto; width: 64px; padding: 10px 0; text-align: center; border-radius: 12px;
+  border: 1px solid var(--line); background: var(--bg); color: var(--ink); cursor: pointer; font: inherit;
+}
+.day .dow { display: block; font-size: .7rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.day .dnum { display: block; font-family: var(--font-display); font-size: 1.6rem; font-weight: 600; line-height: 1.1; }
+.day .mon { display: block; font-size: .7rem; color: var(--muted); }
+.day:hover { border-color: var(--brass); }
+.day[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.day[aria-pressed="true"] .dow, .day[aria-pressed="true"] .mon { color: var(--bg); opacity: .75; }
+.day:disabled { opacity: .4; cursor: not-allowed; text-decoration: line-through; }
+
+.slots { display: grid; grid-template-columns: repeat(auto-fill, minmax(78px, 1fr)); gap: 8px; }
+.slot {
+  padding: 10px 0; border-radius: 10px; border: 1px solid var(--line); background: var(--bg); color: var(--ink);
+  font: 500 .95rem var(--font-body); font-variant-numeric: tabular-nums; cursor: pointer;
+}
+.slot:hover { border-color: var(--brass); }
+.slot[aria-pressed="true"] { background: var(--brass); border-color: var(--brass); color: var(--bg); }
+.slot:disabled { background: var(--taken); color: var(--muted); border-color: transparent; text-decoration: line-through; cursor: not-allowed; }
+.empty { color: var(--muted); font-size: .9rem; padding: 14px; border: 1px dashed var(--line); border-radius: 10px; }
+.legend { display: flex; gap: 16px; font-size: .75rem; color: var(--muted); margin-top: 10px; }
+.legend i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+
+.summary { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 84px); }
+.summary h3 { font-size: 1.5rem; margin-bottom: 16px; }
+.summary dl { margin: 0; display: grid; gap: 12px; }
+.summary dt { font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.summary dd { margin: 2px 0 0; font-weight: 400; }
+.summary .total { display: flex; justify-content: space-between; align-items: baseline; margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--line); }
+.summary .total strong { font-family: var(--font-display); font-size: 1.8rem; font-weight: 600; }
+.summary .btn { width: 100%; margin-top: 20px; }
+.summary .err { color: #b3412e; font-size: .85rem; margin-top: 10px; }
+.summary small { display: block; color: var(--muted); font-size: .75rem; margin-top: 12px; }
+
+.confirm { text-align: center; padding: 12px 0; }
+.confirm .tick { width: 56px; height: 56px; border-radius: 50%; border: 1px solid var(--ok); color: var(--ok); display: grid; place-items: center; margin: 0 auto 16px; font-size: 1.6rem; }
+.confirm h3 { font-size: 2rem; margin-bottom: 10px; }
+.confirm .code { display: inline-block; margin: 14px 0; padding: 8px 16px; border: 1px dashed var(--brass); border-radius: 8px; font-variant-numeric: tabular-nums; letter-spacing: .12em; font-weight: 500; }
+.confirm p { color: var(--muted); max-width: 46ch; margin-inline: auto; }
+
+.mine { margin-top: 24px; }
+.mine h4 { font: 500 .75rem var(--font-body); letter-spacing: .16em; text-transform: uppercase; color: var(--muted); margin: 0 0 10px; }
+.mine ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.mine li { display: flex; justify-content: space-between; align-items: center; gap: 10px; font-size: .88rem; padding: 10px 12px; background: var(--bg); border: 1px solid var(--line); border-radius: 10px; }
+.mine li button { background: none; border: 0; color: var(--muted); cursor: pointer; font: inherit; font-size: .8rem; text-decoration: underline; flex-shrink: 0; }
+
+/* Info */
+.info { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px; }
+@media (max-width: 860px) { .info { grid-template-columns: 1fr; } }
+.info h3 { font-size: 1.5rem; margin-bottom: 14px; }
+.hours { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+.hours td { padding: 8px 0; border-bottom: 1px dotted var(--line); }
+.hours td:last-child { text-align: right; }
+.hours tr.today td { color: var(--brass); font-weight: 500; }
+.hours .closed { color: var(--muted); }
+.info address { font-style: normal; line-height: 1.8; }
+.copyline { display: flex; align-items: center; gap: 10px; margin-top: 6px; }
+.copyline button { background: none; border: 1px solid var(--line); border-radius: 6px; padding: 4px 8px; font: 500 .72rem var(--font-body); color: var(--muted); cursor: pointer; letter-spacing: .06em; }
+.quote { font-family: var(--font-display); font-style: italic; font-size: 1.5rem; line-height: 1.35; }
+.quote + p { margin-top: 12px; color: var(--muted); font-size: .9rem; }
+
+footer { padding-block: 40px; border-top: 1px solid var(--line); font-size: .8rem; color: var(--muted); }
+footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
+footer a { color: var(--muted); }
+</style>
+
+<div class="demo-bar">Demo-Version – Adresse, Preise und Termine sind Beispieldaten. Es werden keine echten Buchungen versendet.</div>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#start"><img src="logo.jpg" alt=""><span>HAARMONIE</span></a>
+    <nav class="links" aria-label="Hauptmenü">
+      <a href="#leistungen">Leistungen</a>
+      <a href="#info">Öffnungszeiten</a>
+      <a href="#kontakt">Kontakt</a>
+      <a class="btn small" href="#termin">Termin buchen</a>
+    </nav>
+  </div>
+</header>
+
+<main id="start">
+  <div class="hero">
+    <div class="wrap">
+      <div>
+        <div class="eyebrow">Haarstudio · Euskirchen</div>
+        <h1>Haarmonie <em>by Nor</em></h1>
+        <p class="lead">Präzise Schnitte, ehrliche Beratung und Farbe, die zu dir passt. Für Damen, Herren und Kinder, mitten in Euskirchen.</p>
+        <div class="actions">
+          <a class="btn" href="#termin">Online-Termin buchen</a>
+          <a class="btn ghost" href="#leistungen">Preise ansehen</a>
+        </div>
+        <div class="facts">
+          <div><strong>24/7</strong>online buchbar</div>
+          <div><strong>Di–Sa</strong>geöffnet</div>
+          <div><strong id="factNext">–</strong>nächster freier Termin</div>
+        </div>
+      </div>
+      <div class="logo-disc"><img src="logo.jpg" alt="Logo Haarmonie Haarstudio mit Monogramm N R und Schere"></div>
+    </div>
+  </div>
+
+  <section id="leistungen" class="alt">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <div class="eyebrow">Leistungen &amp; Preise</div>
+          <h2>Die Salonkarte</h2>
+        </div>
+        <p>Alle Preise inkl. Beratung. Bei langem oder sehr dichtem Haar kann sich der Preis nach Aufwand erhöhen – Nor sagt es dir vorher.</p>
+      </div>
+      <div class="menu" id="menu"></div>
+      <p class="note">Beispielpreise für die Demo. Zeitangaben sind Richtwerte.</p>
+    </div>
+  </section>
+
+  <section id="termin">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <div class="eyebrow">Online-Termin</div>
+          <h2>In drei Schritten zum Termin</h2>
+        </div>
+        <p>Leistung wählen, freien Termin aussuchen, Kontaktdaten eintragen. Du bekommst sofort eine Buchungsnummer.</p>
+      </div>
+
+      <div class="booking">
+        <form class="panel" id="bookForm" novalidate>
+          <div class="step">
+            <div class="step-title"><span class="n">1</span><h3>Leistung</h3></div>
+            <label for="service">Was dürfen wir für dich tun?</label>
+            <select id="service"></select>
+          </div>
+
+          <div class="step">
+            <div class="step-title"><span class="n">2</span><h3>Tag &amp; Uhrzeit</h3><span class="hint" id="durHint"></span></div>
+            <div class="days" id="days" role="group" aria-label="Tag wählen"></div>
+            <div style="margin-top:18px" id="slotWrap">
+              <div class="slots" id="slots" role="group" aria-label="Uhrzeit wählen"></div>
+            </div>
+            <div class="legend"><span><i style="background:var(--bg);border:1px solid var(--line)"></i>frei</span><span><i style="background:var(--taken)"></i>belegt</span><span><i style="background:var(--brass)"></i>gewählt</span></div>
+          </div>
+
+          <div class="step">
+            <div class="step-title"><span class="n">3</span><h3>Deine Daten</h3></div>
+            <div class="fields">
+              <div><label for="fname">Name</label><input id="fname" autocomplete="name" placeholder="Vor- und Nachname"></div>
+              <div><label for="fphone">Telefon</label><input id="fphone" type="tel" autocomplete="tel" placeholder="für Rückfragen"></div>
+              <div class="full"><label for="femail">E-Mail (optional)</label><input id="femail" type="email" autocomplete="email" placeholder="für die Bestätigung"></div>
+              <div class="full"><label for="fnote">Wünsche (optional)</label><textarea id="fnote" rows="3" placeholder="z. B. Länge, Farbwunsch, Allergien"></textarea></div>
+            </div>
+          </div>
+        </form>
+
+        <aside class="panel summary" id="summary" aria-live="polite"></aside>
+      </div>
+    </div>
+  </section>
+
+  <section id="info" class="alt">
+    <div class="wrap info">
+      <div>
+        <div class="eyebrow">Öffnungszeiten</div>
+        <h3 style="margin-top:8px">Wann wir da sind</h3>
+        <table class="hours" id="hours"></table>
+      </div>
+      <div id="kontakt">
+        <div class="eyebrow">Kontakt</div>
+        <h3 style="margin-top:8px">So findest du uns</h3>
+        <address>
+          Haarmonie by Nor<br>
+          Musterstraße 1 <span style="color:var(--muted)">(Platzhalter)</span><br>
+          53879 Euskirchen
+        </address>
+        <div class="copyline"><span id="phoneText">02251 000 000</span><button type="button" data-copy="phoneText">Kopieren</button></div>
+        <p style="margin-top:14px"><a href="https://www.google.com/maps/search/?api=1&amp;query=Haarmonie+by+Nor+Euskirchen" target="_blank" rel="noopener">Route in Google Maps öffnen →</a></p>
+      </div>
+      <div>
+        <div class="eyebrow">Über Nor</div>
+        <h3 style="margin-top:8px">Dein Friseur</h3>
+        <p class="quote">„Ein guter Schnitt fällt auch nach sechs Wochen noch richtig.“</p>
+        <p>Nor nimmt sich für jeden Termin die Zeit für eine echte Beratung – vom klassischen Herrenschnitt bis zur Balayage.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="yr"></span> Haarmonie by Nor · Haarstudio Euskirchen</span>
+    <span><a href="#start">Impressum</a> · <a href="#start">Datenschutz</a> · Demo-Entwurf</span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  // ---- Demo-Daten ----
+  const SERVICES = [
+    { cat: "Damen", items: [
+      { id: "d-wsf", name: "Waschen, Schneiden, Föhnen", min: 60, price: 49, from: true },
+      { id: "d-wf", name: "Waschen & Föhnen / Styling", min: 30, price: 28, from: true },
+      { id: "d-ansatz", name: "Ansatzfarbe inkl. Föhnen", min: 90, price: 69, from: true },
+      { id: "d-bal", name: "Balayage / Strähnen", min: 150, price: 119, from: true },
+      { id: "d-hoch", name: "Hochsteckfrisur", min: 60, price: 59, from: true }
+    ]},
+    { cat: "Herren", items: [
+      { id: "h-schnitt", name: "Herrenhaarschnitt inkl. Waschen", min: 30, price: 26 },
+      { id: "h-fade", name: "Fade / Maschinenschnitt", min: 30, price: 24 },
+      { id: "h-bart", name: "Bart trimmen & Konturen", min: 15, price: 14 },
+      { id: "h-combo", name: "Haarschnitt + Bart", min: 45, price: 36 }
+    ]},
+    { cat: "Kinder & Extras", items: [
+      { id: "k-kind", name: "Kinderhaarschnitt bis 12 J.", min: 30, price: 17 },
+      { id: "k-teen", name: "Jugendliche bis 16 J.", min: 30, price: 21 },
+      { id: "x-pflege", name: "Intensiv-Pflegekur", min: 15, price: 12 },
+      { id: "x-brau", name: "Augenbrauen zupfen", min: 15, price: 9 }
+    ]}
+  ];
+  const ALL = SERVICES.flatMap(c => c.items.map(i => ({ ...i, cat: c.cat })));
+  // Öffnungszeiten in Minuten ab 0:00, Index = getDay() (0 = Sonntag)
+  const HOURS = [null, null, [540, 1080], [540, 1080], [540, 1200], [540, 1080], [480, 840]];
+  const DAYNAMES = ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"];
+  const DOW = ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"];
+  const MON = ["Jan", "Feb", "Mär", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"];
+  const STEP = 15, DAYS_AHEAD = 21, KEY = "haarmonie-demo-bookings";
+
+  const $ = id => document.getElementById(id);
+  const euro = n => n.toLocaleString("de-DE", { minimumFractionDigits: 0 }) + " €";
+  const hm = m => String(Math.floor(m / 60)).padStart(2, "0") + ":" + String(m % 60).padStart(2, "0");
+  const iso = d => d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+  const fromIso = s => { const [y, m, d] = s.split("-").map(Number); return new Date(y, m - 1, d); };
+  const longDate = s => { const d = fromIso(s); return DAYNAMES[d.getDay()] + ", " + d.getDate() + ". " + MON[d.getMonth()] + " " + d.getFullYear(); };
+
+  function load() { try { return JSON.parse(localStorage.getItem(KEY)) || []; } catch (e) { return []; } }
+  function save(list) { try { localStorage.setItem(KEY, JSON.stringify(list)); } catch (e) {} }
+  let mine = load();
+
+  // Beispiel-Belegung: deterministisch pro Tag, damit der Kalender realistisch aussieht
+  function hash(str) { let h = 2166136261; for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; }
+  function busyBlocks(dateStr) {
+    const d = fromIso(dateStr), oh = HOURS[d.getDay()]; if (!oh) return [];
+    const blocks = []; let t = oh[0];
+    while (t < oh[1]) {
+      const r = hash(dateStr + ":" + t) % 100;
+      if (r < 38) { const len = [30, 30, 45, 60, 90][r % 5]; blocks.push([t, t + len]); t += len; }
+      else t += 30;
+    }
+    mine.filter(b => b.date === dateStr).forEach(b => blocks.push([b.start, b.start + b.min]));
+    return blocks;
+  }
+  function freeSlots(dateStr, dur) {
+    const d = fromIso(dateStr), oh = HOURS[d.getDay()]; if (!oh) return [];
+    const busy = busyBlocks(dateStr), now = new Date();
+    const isToday = iso(now) === dateStr, nowMin = now.getHours() * 60 + now.getMinutes() + 60;
+    const out = [];
+    for (let t = oh[0]; t + dur <= oh[1]; t += STEP) {
+      if (t % 30 !== 0 && dur >= 30) continue; // Start zur halben/vollen Stunde bei längeren Leistungen
+      const taken = busy.some(([a, b]) => t < b && t + dur > a) || (isToday && t < nowMin);
+      out.push({ t, taken });
+    }
+    return out;
+  }
+
+  // ---- State ----
+  const state = { service: "h-schnitt", date: null, time: null, done: null };
+  const svc = () => ALL.find(s => s.id === state.service);
+
+  // ---- Preisliste ----
+  $("menu").innerHTML = SERVICES.map(c => `
+    <div><h3>${c.cat}</h3><ul>${c.items.map(i => `
+      <li><div class="row"><span class="name">${i.name}</span><span class="dots"></span><span class="price">${i.from ? "ab " : ""}${euro(i.price)}</span></div>
+      <div class="meta"><span>ca. ${i.min} Min.</span><button type="button" data-pick="${i.id}">Buchen</button></div></li>`).join("")}</ul></div>`).join("");
+  $("menu").addEventListener("click", e => {
+    const id = e.target.dataset && e.target.dataset.pick; if (!id) return;
+    state.service = id; $("service").value = id; state.time = null; state.done = null; renderAll();
+    $("termin").scrollIntoView();
+  });
+
+  // ---- Leistungsauswahl ----
+  $("service").innerHTML = SERVICES.map(c => `<optgroup label="${c.cat}">${c.items.map(i => `<option value="${i.id}">${i.name} – ${i.from ? "ab " : ""}${euro(i.price)}</option>`).join("")}</optgroup>`).join("");
+  $("service").value = state.service;
+  $("service").addEventListener("change", e => { state.service = e.target.value; state.time = null; state.done = null; renderAll(); });
+
+  // ---- Tage ----
+  const days = [];
+  { const base = new Date(); base.setHours(0, 0, 0, 0); for (let i = 0; i < DAYS_AHEAD; i++) { const d = new Date(base); d.setDate(base.getDate() + i); days.push(d); } }
+  function firstOpenDay() { for (const d of days) { const s = iso(d); if (freeSlots(s, svc().min).some(x => !x.taken)) return s; } return null; }
+
+  function renderDays() {
+    $("days").innerHTML = days.map(d => {
+      const s = iso(d), open = !!HOURS[d.getDay()], any = open && freeSlots(s, svc().min).some(x => !x.taken);
+      return `<button type="button" class="day" data-date="${s}" aria-pressed="${state.date === s}" ${any ? "" : "disabled"} title="${open ? (any ? "" : "ausgebucht") : "geschlossen"}">
+        <span class="dow">${DOW[d.getDay()]}</span><span class="dnum">${d.getDate()}</span><span class="mon">${MON[d.getMonth()]}</span></button>`;
+    }).join("");
+  }
+  $("days").addEventListener("click", e => {
+    const b = e.target.closest(".day"); if (!b || b.disabled) return;
+    state.date = b.dataset.date; state.time = null; state.done = null; renderAll();
+  });
+
+  function renderSlots() {
+    $("durHint").textContent = "Dauer ca. " + svc().min + " Min.";
+    if (!state.date) { $("slots").innerHTML = `<div class="empty">Wähle zuerst einen Tag.</div>`; return; }
+    const list = freeSlots(state.date, svc().min);
+    $("slots").innerHTML = list.map(x => `<button type="button" class="slot" data-t="${x.t}" aria-pressed="${state.time === x.t}" ${x.taken ? "disabled" : ""}>${hm(x.t)}</button>`).join("");
+  }
+  $("slots").addEventListener("click", e => {
+    const b = e.target.closest(".slot"); if (!b || b.disabled) return;
+    state.time = Number(b.dataset.t); state.done = null; renderSlots(); renderSummary();
+  });
+
+  // ---- Zusammenfassung ----
+  function renderSummary() {
+    const el = $("summary");
+    if (state.done) {
+      const b = state.done;
+      el.innerHTML = `<div class="confirm"><div class="tick" aria-hidden="true">✓</div><h3>Termin reserviert</h3>
+        <p>${b.service}<br>${longDate(b.date)}, ${hm(b.start)}–${hm(b.start + b.min)} Uhr</p>
+        <div class="code">${b.code}</div>
+        <p>Demo: In der echten Version bekäme ${b.name.split(" ")[0]} jetzt eine Bestätigung per SMS oder E-Mail.</p>
+        <button type="button" class="btn ghost small" id="again" style="margin-top:18px">Weiteren Termin buchen</button></div>` + mineHtml();
+      return;
+    }
+    const s = svc();
+    el.innerHTML = `<h3>Deine Buchung</h3><dl>
+      <div><dt>Leistung</dt><dd>${s.name}</dd></div>
+      <div><dt>Termin</dt><dd>${state.date ? longDate(state.date) : "–"}${state.time != null ? "<br>" + hm(state.time) + "–" + hm(state.time + s.min) + " Uhr" : ""}</dd></div>
+      <div><dt>Bei</dt><dd>Nor</dd></div></dl>
+      <div class="total"><span>${s.from ? "ab" : "Preis"}</span><strong>${euro(s.price)}</strong></div>
+      <button type="button" class="btn" id="bookBtn" ${state.date && state.time != null ? "" : "disabled"}>Verbindlich buchen</button>
+      <div class="err" id="err" hidden></div>
+      <small>Bezahlung im Salon, bar oder mit Karte. Kostenlose Absage bis 24 Std. vorher.</small>` + mineHtml();
+  }
+  function mineHtml() {
+    const up = mine.filter(b => b.date >= iso(new Date())).sort((a, b) => (a.date + hm(a.start)).localeCompare(b.date + hm(b.start)));
+    if (!up.length) return "";
+    return `<div class="mine"><h4>Meine Termine (dieser Browser)</h4><ul>${up.map(b => `<li><span>${fromIso(b.date).getDate()}. ${MON[fromIso(b.date).getMonth()]}, ${hm(b.start)} · ${b.service}</span><button type="button" data-cancel="${b.code}">Absagen</button></li>`).join("")}</ul></div>`;
+  }
+  $("summary").addEventListener("click", e => {
+    if (e.target.id === "again") { state.done = null; state.time = null; renderAll(); return; }
+    const c = e.target.dataset && e.target.dataset.cancel;
+    if (c) { mine = mine.filter(b => b.code !== c); save(mine); renderAll(); return; }
+    if (e.target.id !== "bookBtn") return;
+    const name = $("fname").value.trim(), phone = $("fphone").value.trim(), err = $("err");
+    const miss = [];
+    if (name.length < 2) miss.push("deinen Namen");
+    if (phone.replace(/\D/g, "").length < 6) miss.push("eine Telefonnummer");
+    if (miss.length) { err.textContent = "Bitte trag noch " + miss.join(" und ") + " ein (Schritt 3)."; err.hidden = false; $(name.length < 2 ? "fname" : "fphone").focus(); return; }
+    const s = svc(), d = fromIso(state.date);
+    const code = "HN-" + String(d.getDate()).padStart(2, "0") + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(hash(name + state.date + state.time + Date.now()) % 9000 + 1000);
+    const b = { code, service: s.name, min: s.min, date: state.date, start: state.time, name };
+    mine.push(b); save(mine); state.done = b; state.time = null;
+    $("bookForm").reset(); $("service").value = state.service;
+    renderDays(); renderSlots(); renderSummary(); renderNext();
+  });
+
+  // ---- Öffnungszeiten ----
+  function renderHours() {
+    const today = new Date().getDay(), order = [1, 2, 3, 4, 5, 6, 0];
+    $("hours").innerHTML = order.map(i => `<tr class="${i === today ? "today" : ""}"><td>${DAYNAMES[i]}</td><td class="${HOURS[i] ? "" : "closed"}">${HOURS[i] ? hm(HOURS[i][0]) + "–" + hm(HOURS[i][1]) : "geschlossen"}</td></tr>`).join("");
+  }
+  function renderNext() {
+    for (const d of days) { const s = iso(d), f = freeSlots(s, 30).find(x => !x.taken); if (f) { $("factNext").textContent = DOW[d.getDay()] + " " + hm(f.t); return; } }
+  }
+
+  // Kopieren
+  document.addEventListener("click", e => {
+    const id = e.target.dataset && e.target.dataset.copy; if (!id) return;
+    const txt = $(id).textContent, btn = e.target;
+    const ok = () => { btn.textContent = "Kopiert"; setTimeout(() => btn.textContent = "Kopieren", 1500); };
+    try { navigator.clipboard.writeText(txt).then(ok, () => selectText(id)); } catch (er) { selectText(id); }
+  });
+  function selectText(id) { const r = document.createRange(); r.selectNodeContents($(id)); const s = getSelection(); s.removeAllRanges(); s.addRange(r); }
+
+  function renderAll() {
+    if (!state.date || !freeSlots(state.date, svc().min).some(x => !x.taken)) state.date = firstOpenDay();
+    renderDays(); renderSlots(); renderSummary();
+  }
+  $("yr").textContent = new Date().getFullYear();
+  renderHours(); renderNext(); renderAll();
+})();
+</script>
